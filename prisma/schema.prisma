@@ -38,3 +38,7 @@ model Product {
   price       Int
   images      String[]
 }
+
+model Card {
+
+}
