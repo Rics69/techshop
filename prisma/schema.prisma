@@ -55,3 +55,19 @@ model Review {
   rating Int
   text   String
 }
+
+model Order {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  status String
+  items  OrderItem[]
+}
+
+enum EnumOrderStatus {
+  PENDING
+  PAYED
+  SHIPPED
+  DELIVERED
+}
