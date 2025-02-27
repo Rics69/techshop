@@ -65,8 +65,8 @@ model Review {
   rating Int
   text   String
 
-  user   TecnUser @relation(fields: [userId], references: [id])
-  userId Int?     @map("tecnuser_id")
+  tecnUser   TecnUser @relation(fields: [tecnUserId], references: [id])
+  tecnUserId Int?     @map("tecnuser_id")
 
   product   Product? @relation(fields: [productId], references: [id])
   productId Int?     @map("product_id")
@@ -80,8 +80,8 @@ model Order {
   status EnumOrderStatus @default(PENDING)
   items  OrderItem[]
 
-  user   TecnUser @relation(fields: [userId], references: [id])
-  userId Int?     @map("tecnuser_id")
+  tecnUser   TecnUser @relation(fields: [tecnUserId], references: [id])
+  tecnUserId Int?     @map("tecnuser_id")
 }
 
 enum EnumOrderStatus {
