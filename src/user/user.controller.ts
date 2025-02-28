@@ -3,7 +3,7 @@ import {
 	Controller,
 	Get,
 	HttpCode,
-	Post,
+	Post, Put,
 	UsePipes,
 	ValidationPipe
 } from '@nestjs/common'
@@ -19,13 +19,13 @@ export class UserController {
 
 	@Get('profile')
 	@Auth()
-	async getProfile(@CurrentUser('id') userId: string) {
-		return this.authService.login(dto)
+	async getProfile(@CurrentUser('id') id: number) {
+		return this.userService.byId(id)
 	}
 
 	@UsePipes(new ValidationPipe())
 	@HttpCode(200)
-	@Post('login/access-token')
+	@Put('profile')
 	async getNewTokens(@Body() dto: RefreshTokenDto) {
 		return this.authService.getNewTokens(dto.refreshToken)
 	}
