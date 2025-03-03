@@ -3,7 +3,10 @@ import {
 	Controller,
 	Get,
 	HttpCode,
-	Post, Put,
+	Param,
+	Patch,
+	Post,
+	Put,
 	UsePipes,
 	ValidationPipe
 } from '@nestjs/common'
@@ -12,6 +15,7 @@ import { AuthDto } from '../auth/dto/auth.dto'
 import { RefreshTokenDto } from '../auth/dto/refresh-token.dto'
 import { Auth } from '../auth/decorators/auth.decorator'
 import { CurrentUser } from '../auth/decorators/user.decorator'
+import { UserDto } from './user.dto'
 
 @Controller('users')
 export class UserController {
@@ -25,15 +29,19 @@ export class UserController {
 
 	@UsePipes(new ValidationPipe())
 	@HttpCode(200)
+	@Auth()
 	@Put('profile')
-	async getNewTokens(@Body() dto: RefreshTokenDto) {
-		return this.authService.getNewTokens(dto.refreshToken)
+	async getNewTokens(@CurrentUser('id') id: number, @Body() dto: UserDto) {
+		return this.userService.updateProfile(id, dto)
 	}
 
-	@UsePipes(new ValidationPipe())
+	@Auth()
 	@HttpCode(200)
-	@Post('register')
-	async register(@Body() dto: AuthDto) {
-		return this.authService.register(dto)
+	@Patch('profile/favorites/:productId')
+	async toggleFavorite(
+		@Param('productId') productId: string,
+		@CurrentUser('id') id: number
+	) {
+		return this.userService.toggleFavorite(id, productId)
 	}
 }
