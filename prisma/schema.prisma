@@ -26,8 +26,9 @@ model TecnUser {
 
   phone String @default("")
 
-  orders  Order[]
-  reviews Review[]
+  orders    Order[]
+  reviews   Review[]
+  favorites Product[]
 }
 
 model Product {
@@ -46,6 +47,9 @@ model Product {
 
   Category   Category? @relation(fields: [categotyId], references: [id])
   categotyId Int?      @map("category_id")
+
+  tecnUser   TecnUser @relation(fields: [tecnUserId], references: [id])
+  tecnUserId Int?     @map("tecnuser_id")
 }
 
 model Category {
